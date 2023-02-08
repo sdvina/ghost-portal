@@ -4,7 +4,7 @@
     "demo": "https://www.jayhsu.org",
     "version": "1.0.0",
     "engines": {
-        "ghost": ">=4.0.0"
+        "ghost": ">=5.0.0"
     },
     "license": "MIT",
     "screenshots": {
@@ -27,8 +27,9 @@
     "gpm": {
         "type": "theme",
         "categories": [
-            "Minimal",
-            "Magazine"
+            "Portal",
+            "Blog",
+            "Development"
         ]
     },
     "keywords": [
