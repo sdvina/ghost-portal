@@ -36,17 +36,6 @@
         <div class="gh-head-menu">
             {{navigation}}
         </div>
-        <div class="gh-head-actions">
-            <div class="gh-head-actions-list">
-                {{#if @site.facebook}}
-                <a href="{{facebook_url @site.facebook}}" title="Facebook" target="_blank" rel="noopener">{{> "icons/facebook"}}</a>
-                {{/if}}
-                {{#if @site.twitter}}
-                <a href="{{twitter_url @site.twitter}}" title="Twitter" target="_blank" rel="noopener">{{> "icons/twitter"}}</a>
-                {{/if}}
-                <a href="https://feedly.com/i/subscription/feed/{{@site.url}}/rss/" title="RSS" target="_blank" rel="noopener">{{> "icons/rss"}}</a>
-            </div>
-        </div>
     </nav>
 </header>
 
@@ -62,9 +51,7 @@
         <div class="gh-foot-menu">
             {{navigation}}
         </div>
-        <div class="gh-foot-meta">
-            Published with <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
-        </div>
+        {{> copyright}}
     </div>
 </footer>
 
@@ -76,7 +63,7 @@
 
 {{#if pagination.pages}}
 <script>
-    var maxPages = parseInt('{{pagination.pages}}');
+    const maxPages = parseInt('{{pagination.pages}}');
 </script>
 <script src="{{asset "built/infinitescroll.js"}}"></script>
 {{/if}}
@@ -93,16 +80,16 @@ $(document).ready(function () {
 {{#is "post, page"}}
 <script src="{{asset "built/jquery.fitvids.js"}}"></script>
 <script>
-var images = document.querySelectorAll('.kg-gallery-image img');
-images.forEach(function (image) {
-    var container = image.closest('.kg-gallery-image');
-    var width = image.attributes.width.value;
-    var height = image.attributes.height.value;
-    var ratio = width / height;
-    container.style.flex = ratio + ' 1 0%';
+    const images = document.querySelectorAll('.kg-gallery-image img');
+    images.forEach(function (image) {
+        const container = image.closest('.kg-gallery-image');
+        const width = image.attributes.width.value;
+        const height = image.attributes.height.value;
+        const ratio = width / height;
+        container.style.flex = ratio + ' 1 0%';
 });
 $(document).ready(function () {
-    var $postContent = $(".gh-content");
+    const $postContent = $(".gh-content");
     $postContent.fitVids();
 });
 </script>
