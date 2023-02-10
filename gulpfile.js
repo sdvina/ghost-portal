@@ -2,7 +2,9 @@ const {series, watch, src, dest, parallel} = require('gulp');
 const pump = require('pump');
 
 // gulp plugins and utils
+const gulpClean = require('gulp-clean');
 const gulpLess = require('gulp-less');
+const gulpTs = require('gulp-typescript');
 const concat = require('gulp-concat');
 const livereload = require('gulp-livereload');
 const postcss = require('gulp-postcss');
@@ -17,8 +19,10 @@ const cssnano = require('cssnano');
 const easyImport = require('postcss-easy-import');
 
 const filePath = {
+    built: 'assets/built/*',
     less: 'assets/less/*.less',
     css: 'assets/css/*.css',
+    ts: 'assets/ts/*.ts',
     js: 'assets/js/*.js',
     json: 'locales/*.json',
     hbs: ['*.hbs', '**/**/*.hbs', '!node_modules/**/*.hbs'],
@@ -31,7 +35,8 @@ const filePath = {
 
 const destPath = {
     less: 'assets/css/',
-    css: 'assets/css/',
+    css: 'assets/built/',
+    ts: 'assets/js/',
     js: 'assets/built/'
 }
 
@@ -48,6 +53,13 @@ const handleError = (done) => {
         return done(err);
     };
 };
+
+function clean(done) {
+    pump([
+        src(filePath.built),
+        gulpClean()
+    ], handleError(done));
+}
 
 function hbs(done) {
     pump([
@@ -89,9 +101,23 @@ function css(done) {
     ], handleError(done));
 }
 
+function ts(done) {
+    pump([
+        src(filePath.ts),
+        gulpTs({
+            target: "es5",
+            sourceMap: true,
+            noImplicitAny: true,
+            outFile: 'ts-all.js'
+        }),
+        dest(destPath.ts)
+    ], handleError(done));
+}
+
 function js(done) {
     pump([
         src(filePath.js, {sourcemaps: true}),
+        concat("all-min.js"),
         uglify(),
         dest(destPath.js, {sourcemaps: '.'}),
         livereload()
@@ -111,10 +137,12 @@ function zipper(done) {
 }
 const lessWatcher = () => watch(filePath.less, less);
 const cssWatcher = () => watch(filePath.css, css);
+const tsWatcher = () => watch(filePath.ts, ts);
 const jsonWatcher = () => watch(filePath.json, json);
 const hbsWatcher = () => watch(filePath.hbs, hbs);
-const watcher = parallel(lessWatcher, cssWatcher, jsonWatcher, hbsWatcher);
-const build = series(css, js);
+
+const watcher = parallel(lessWatcher, cssWatcher, tsWatcher, jsonWatcher, hbsWatcher);
+const build = series(clean, less, css, ts, js);
 const dev = series(build, serve, watcher);
 
 exports.build = build;

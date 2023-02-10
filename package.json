@@ -52,8 +52,10 @@
         "cssnano": "5.1.14",
         "gscan": "4.36.0",
         "gulp": "4.0.2",
-        "gulp-less": "^5.0.0",
-        "gulp-concat": "^2.6.1",
+        "gulp-clean": "0.4.0",
+        "gulp-concat": "2.6.1",
+        "gulp-less": "5.0.0",
+        "gulp-typescript": "6.0.0-alpha.1",
         "gulp-livereload": "4.0.2",
         "gulp-postcss": "9.0.1",
         "gulp-sourcemaps": "3.0.0",
@@ -64,7 +66,8 @@
         "postcss": "8.4.21",
         "postcss-color-mod-function": "3.0.3",
         "postcss-easy-import": "4.0.0",
-        "pump": "3.0.0"
+        "pump": "3.0.0",
+        "typescript": "4.9.5"
     },
     "browserslist": [
         "defaults"
@@ -92,10 +95,5 @@
                 "width": 2000
             }
         }
-    },
-    "dependencies": {
-        "gulp-concat": "^2.6.1",
-        "gulp-less": "^5.0.0",
-        "pump": "^3.0.0"
     }
 }
