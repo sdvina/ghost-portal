@@ -19,12 +19,12 @@ const cssnano = require('cssnano');
 const easyImport = require('postcss-easy-import');
 
 const filePath = {
-    built: 'assets/built/*',
-    less: 'assets/less/*.less',
-    css: 'assets/css/*.css',
-    ts: 'assets/ts/*.ts',
-    js: 'assets/js/*.js',
-    json: 'locales/*.json',
+    built: 'assets/built/**/*',
+    less: 'assets/less/**/*.less',
+    css: 'assets/css/**/*.css',
+    ts: 'assets/ts/**/*.ts',
+    js: 'assets/js/**/*.js',
+    json: 'locales/**/*.json',
     hbs: ['*.hbs', '**/**/*.hbs', '!node_modules/**/*.hbs'],
     zip: [
         '**',
@@ -94,7 +94,7 @@ function css(done) {
 
     pump([
         src(filePath.css, {sourcemaps: true}),
-        concat('all-min.css'),
+        concat('style-min.css'),
         postcss(processors),
         dest(destPath.css, {sourcemaps: '.'}),
         livereload()
@@ -117,7 +117,7 @@ function ts(done) {
 function js(done) {
     pump([
         src(filePath.js, {sourcemaps: true}),
-        concat("all-min.js"),
+        concat("index-min.js"),
         uglify(),
         dest(destPath.js, {sourcemaps: '.'}),
         livereload()
