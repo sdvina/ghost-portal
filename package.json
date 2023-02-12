@@ -95,9 +95,6 @@
             "xl": {
                 "width": 2000
             }
-        },
-        "custom": {
-            "dark_mode": true
         }
     }
 }
