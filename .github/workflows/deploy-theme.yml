@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-pnpm@v7
+      - uses: pnpm/action-setup@v2
         with:
-          cmd: install
+          version: 7
       - run: pnpm install
       - run: pnpm test:ci
       - run: pnpm ship
