@@ -8,9 +8,9 @@ const gulpTs = require('gulp-typescript');
 const concat = require('gulp-concat');
 const livereload = require('gulp-livereload');
 const postcss = require('gulp-postcss');
-const zip = require('gulp-zip');
 const uglify = require('gulp-uglify');
 const beeper = require('beeper');
+const zip = require('gulp-zip');
 
 // postcss plugins
 const autoprefixer = require('autoprefixer');
@@ -29,13 +29,12 @@ const filePath = {
         'assets/js/**/*.js'
         ],
     json: 'locales/**/*.json',
-    hbs: ['*.hbs', '**/**/*.hbs', '!node_modules/**/*.hbs'],
+    hbs: ['*.hbs', 'partials/**/*.hbs'],
     zip: [
         '**',
-        '!assets/ts/**', '!assets/js/**', '!assets/less/**', '!assets/css/**',
+        '!assets/ts/**', '!assets/js/**', '!assets/scss/**', '!assets/css/**',
         '!node_modules', '!node_modules/**',
-        '!dist', '!dist/**',
-        '!portal/**'
+        '!dist', '!dist/**'
     ]
 }
 
@@ -100,7 +99,6 @@ function css(done) {
 
     pump([
         src('assets/css/screen.css', {sourcemaps: true}),
-        //concat('style-min.css'),
         postcss(processors),
         dest(destPath.css, {sourcemaps: '.'}),
         livereload()
@@ -123,7 +121,7 @@ function ts(done) {
 function js(done) {
     pump([
         src(filePath.js, {sourcemaps: true}),
-        concat("main-min.js"),
+        concat("main.min.js"),
         uglify(),
         dest(destPath.js, {sourcemaps: '.'}),
         livereload()
@@ -141,13 +139,15 @@ function zipper(done) {
         dest(targetDir)
     ], handleError(done));
 }
-const lessWatcher = () => watch(filePath.scss, scss);
+
+const sassWatcher = () => watch(filePath.scss, scss);
 const cssWatcher = () => watch(filePath.css, css);
 const tsWatcher = () => watch(filePath.ts, ts);
+const jsWatcher = () => watch(filePath.js, js);
 const jsonWatcher = () => watch(filePath.json, json);
 const hbsWatcher = () => watch(filePath.hbs, hbs);
 
-const watcher = parallel(lessWatcher, cssWatcher, tsWatcher, jsonWatcher, hbsWatcher);
+const watcher = parallel(sassWatcher, cssWatcher, tsWatcher, jsWatcher, jsonWatcher, hbsWatcher);
 const build = series(clean, scss, css, ts, js);
 const dev = series(build, serve, watcher);
 
