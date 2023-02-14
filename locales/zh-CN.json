@@ -1,5 +1,17 @@
 {
     "Author": "作者",
     "Based on": "基于",
-    "Theme Repository": "主题仓库"
+    "Theme Repository": "主题仓库",
+    "Account": "账号",
+    "Close (Esc)": "关闭 （Esc）",
+    "Next": "下一篇",
+    "Next (arrow right)": "下一页",
+    "Previous": "上一篇",
+    "Previous (arrow left)": "上一页",
+    "Read More": "更多",
+    "Sign in": "登录",
+    "Share": "分享",
+    "Subscribe": "订阅",
+    "Toggle fullscreen": "双击全屏",
+    "You might also like...": "你可能还喜欢..."
 }
