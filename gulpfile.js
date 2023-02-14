@@ -3,7 +3,7 @@ const pump = require('pump');
 
 // gulp plugins and utils
 const gulpClean = require('gulp-clean');
-const gulpLess = require('gulp-less');
+const sass = require('gulp-sass')(require('sass'));
 const gulpTs = require('gulp-typescript');
 const concat = require('gulp-concat');
 const livereload = require('gulp-livereload');
@@ -19,22 +19,28 @@ const cssnano = require('cssnano');
 const easyImport = require('postcss-easy-import');
 
 const filePath = {
-    built: 'assets/built/**/*',
-    less: 'assets/less/**/*.less',
+    built: 'assets/built/*',
+    scss: 'assets/less/**/*.scss',
     css: 'assets/css/**/*.css',
     ts: 'assets/ts/**/*.ts',
-    js: 'assets/js/**/*.js',
+    js: [
+        'node_modules/@tryghost/shared-theme-assets/assets/js/v1/lib/**/*.js',
+        'node_modules/@tryghost/shared-theme-assets/assets/js/v1/main.js',
+        'assets/js/**/*.js'
+        ],
     json: 'locales/**/*.json',
     hbs: ['*.hbs', '**/**/*.hbs', '!node_modules/**/*.hbs'],
     zip: [
         '**',
+        '!assets/ts/**', '!assets/js/**', '!assets/less/**', '!assets/css/**',
         '!node_modules', '!node_modules/**',
-        '!dist', '!dist/**'
+        '!dist', '!dist/**',
+        '!portal/**'
     ]
 }
 
 const destPath = {
-    less: 'assets/css/',
+    scss: 'assets/css/',
     css: 'assets/built/',
     ts: 'assets/js/',
     js: 'assets/built/'
@@ -75,12 +81,12 @@ function json(done) {
     ], handleError(done));
 }
 
-function less(done) {
+function scss(done) {
     pump([
-        src(filePath.less),
-        concat('less-all.less'),
-        gulpLess(),
-        dest(destPath.less),
+        src(filePath.scss),
+        concat('scss-all.scss'),
+        sass(),
+        dest(destPath.scss),
     ], handleError(done));
 }
 
@@ -93,8 +99,8 @@ function css(done) {
     ];
 
     pump([
-        src(filePath.css, {sourcemaps: true}),
-        concat('style-min.css'),
+        src('assets/css/screen.css', {sourcemaps: true}),
+        //concat('style-min.css'),
         postcss(processors),
         dest(destPath.css, {sourcemaps: '.'}),
         livereload()
@@ -117,7 +123,7 @@ function ts(done) {
 function js(done) {
     pump([
         src(filePath.js, {sourcemaps: true}),
-        concat("index-min.js"),
+        concat("main-min.js"),
         uglify(),
         dest(destPath.js, {sourcemaps: '.'}),
         livereload()
@@ -135,14 +141,14 @@ function zipper(done) {
         dest(targetDir)
     ], handleError(done));
 }
-const lessWatcher = () => watch(filePath.less, less);
+const lessWatcher = () => watch(filePath.scss, scss);
 const cssWatcher = () => watch(filePath.css, css);
 const tsWatcher = () => watch(filePath.ts, ts);
 const jsonWatcher = () => watch(filePath.json, json);
 const hbsWatcher = () => watch(filePath.hbs, hbs);
 
 const watcher = parallel(lessWatcher, cssWatcher, tsWatcher, jsonWatcher, hbsWatcher);
-const build = series(clean, less, css, ts, js);
+const build = series(clean, scss, css, ts, js);
 const dev = series(build, serve, watcher);
 
 exports.build = build;
