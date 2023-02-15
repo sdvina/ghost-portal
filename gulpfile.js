@@ -20,7 +20,7 @@ const easyImport = require('postcss-easy-import');
 
 const filePath = {
     built: 'assets/built/*',
-    scss: 'assets/less/**/*.scss',
+    scss: 'assets/scss/**/*.scss',
     css: 'assets/css/**/*.css',
     ts: 'assets/ts/**/*.ts',
     js: [
