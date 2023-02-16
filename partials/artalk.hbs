@@ -1,0 +1,19 @@
+<!-- CSS -->
+<link href="https://unpkg.com/artalk@2.4.4/dist/Artalk.css" rel="stylesheet">
+
+<!-- JS -->
+<script src="https://unpkg.com/artalk@2.4.4/dist/Artalk.js"></script>
+
+<!-- Artalk -->
+<div id="Comments" class="gh-comments gh-canvas"></div>
+
+<script>
+    new Artalk({
+        el:        '#Comments',              // 绑定元素的 Selector
+        //pageKey:   '/post/1',                // 固定链接 (留空自动获取)
+        //pageTitle: 'Artalk', // 页面标题 (留空自动获取)
+        server:    'https://www.jayhsu.org/artalk/',  // 后端地址
+        site: 'jayhsu.org', //生产站点
+        //site:      '本地测试'          // 测试站点
+    })
+</script>

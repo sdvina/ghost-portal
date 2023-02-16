@@ -20,7 +20,7 @@ const easyImport = require('postcss-easy-import');
 
 const filePath = {
     built: 'assets/built/*',
-    scss: 'assets/scss/**/*.scss',
+    scss: 'assets/sass/**/*.sass',
     css: 'assets/css/**/*.css',
     ts: 'assets/ts/**/*.ts',
     js: [
@@ -32,7 +32,7 @@ const filePath = {
     hbs: ['*.hbs', 'partials/**/*.hbs'],
     zip: [
         '**',
-        '!assets/ts/**', '!assets/js/**', '!assets/scss/**', '!assets/css/**',
+        '!assets/ts/**', '!assets/js/**', '!assets/sass/**', '!assets/css/**',
         '!node_modules', '!node_modules/**',
         '!dist', '!dist/**'
     ]
@@ -83,7 +83,7 @@ function json(done) {
 function scss(done) {
     pump([
         src(filePath.scss),
-        concat('scss-all.scss'),
+        concat('sass-all.sass'),
         sass(),
         dest(destPath.scss),
     ], handleError(done));
@@ -98,7 +98,7 @@ function css(done) {
     ];
 
     pump([
-        src('assets/css/screen.css', {sourcemaps: true}),
+        src(filePath.css, {sourcemaps: true}),
         postcss(processors),
         dest(destPath.css, {sourcemaps: '.'}),
         livereload()

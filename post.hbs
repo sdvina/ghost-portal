@@ -7,17 +7,17 @@
     <article class="gh-article {{post_class}}">
 
         <header class="gh-article-header gh-canvas">
+
+            <h1 class="gh-article-title">{{title}}</h1>
+
             <span class="gh-article-meta"{{#if primary_tag.accent_color}} style="--tag-color: {{primary_tag.accent_color}};"{{/if}}>
-                {{#primary_author}}By <a href="{{url}}">{{name}}</a>{{/primary_author}}
+                {{#primary_author}}{{t "Posted by"}} <a href="{{url}}">{{name}}</a> {{/primary_author}}
                 {{#if primary_tag}}
-                    in
-                    <a class="gh-article-tag" href="{{primary_tag.url}}">{{primary_tag.name}}</a>
+                    {{t "Tag"}} <a class="gh-article-tag" href="{{primary_tag.url}}">{{primary_tag.name}}</a>
                 {{/if}}
                 —
                 <time datetime="{{date format="YYYY-MM-DD"}}">{{date}}</time>
             </span>
-
-            <h1 class="gh-article-title">{{title}}</h1>
 
             {{#if custom_excerpt}}
                 <p class="gh-article-excerpt">{{custom_excerpt}}</p>
@@ -33,6 +33,10 @@
     </article>
 
     {{> "post-navigation"}}
+
+    {{> artalk}}
+
+    {{comments}}
 
     {{#if comments}}
         <div class="gh-comments gh-canvas">
