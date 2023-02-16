@@ -129,6 +129,17 @@
                 "type": "boolean",
                 "default": true,
                 "group": "post"
+            },
+            "comment_system": {
+                "type": "select",
+                "options": [
+                    "ghost",
+                    "giscus",
+                    "artalk",
+                    "none"
+                ],
+                "default": "giscus",
+                "group": "post"
             }
         }
     }

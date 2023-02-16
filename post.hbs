@@ -34,15 +34,16 @@
 
     {{> "post-navigation"}}
 
-    {{> artalk}}
-
-    {{comments}}
-
-    {{#if comments}}
-        <div class="gh-comments gh-canvas">
+    <div class="gh-comments gh-canvas">
+        {{#match @custom.comment_system "ghost"}}
             {{comments}}
-        </div>
-    {{/if}}
+        {{else match @custom.comment_system "giscus"}}
+            {{> giscus}}
+        {{else match @custom.comment_system "artalk"}}
+            {{> artalk}}
+        {{else}}
+        {{/match}}
+    </div>
 
     {{/post}}
 
