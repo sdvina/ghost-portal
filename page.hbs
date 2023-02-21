@@ -2,24 +2,24 @@
 
 <main>
     <div class="card mb-4 border-0">
-    {{#post}}
-    <article>
+        {{#post}}
+        <article>
 
-        <header >
-            <h1 class="h4 text-start">{{title}}</h1>
+            <header >
+                <h1 class="h4 text-start">{{title}}</h1>
 
-            {{#if custom_excerpt}}
-                <p>{{custom_excerpt}}</p>
-            {{/if}}
+                {{#if custom_excerpt}}
+                    <p>{{custom_excerpt}}</p>
+                {{/if}}
 
-            {{> "post-image"}}
-        </header>
+                {{> "post-image"}}
+            </header>
 
-        <div >
-            {{content}}
-        </div>
+            <div >
+                {{content}}
+            </div>
 
-    </article>
-    {{/post}}
+        </article>
+        {{/post}}
     </div>
 </main>

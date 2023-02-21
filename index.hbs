@@ -1,10 +1,10 @@
 {{!< default}}
 <main>
-    <div class="flex-lg-row flex-column=2 flex-md-grow-1">
+    <div class="row align-items-stretch">
         {{#foreach posts}}
-        <div class="card mb-4 border-0">
-            {{> "loop"}}
-        </div>
+            <div class="card mb-4 col-6 border-0">
+                {{> "loop"}}
+            </div>
         {{/foreach}}
     </div>
 </main>
