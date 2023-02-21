@@ -1,13 +1,10 @@
 {{!< default}}
-
-<div class="gh-outer">
-<main class="site-main gh-inner">
-
-    <div class="post-feed gh-feed">
+<main>
+    <div class="flex-lg-row flex-column=2 flex-md-grow-1">
         {{#foreach posts}}
+        <div class="card mb-4 border-0">
             {{> "loop"}}
+        </div>
         {{/foreach}}
     </div>
-
 </main>
-</div>

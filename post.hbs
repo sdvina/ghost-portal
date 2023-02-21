@@ -1,32 +1,34 @@
 {{!< default}}
 
-<main class="site-main">
-
+<main>
+    <div class="card mb-4 border-0">
     {{#post}}
 
-    <article class="gh-article {{post_class}}">
+    <article class="{{post_class}}">
 
-        <header class="gh-article-header gh-canvas">
+        <header class="">
 
-            <h1 class="gh-article-title">{{title}}</h1>
+            <h1 class="h3 text-center">{{title}}</h1>
 
-            <span class="gh-article-meta"{{#if primary_tag.accent_color}} style="--tag-color: {{primary_tag.accent_color}};"{{/if}}>
+            {{> "post-image"}}
+
+            <span {{#if primary_tag.accent_color}} style="--tag-color: {{primary_tag.accent_color}};"{{/if}}>
                 {{#primary_author}}{{t "Posted by"}} <a href="{{url}}">{{name}}</a> {{/primary_author}}
                 {{#if primary_tag}}
-                    {{t "Tag"}} <a class="gh-article-tag" href="{{primary_tag.url}}">{{primary_tag.name}}</a>
+                    {{t "Tag"}} <a href="{{primary_tag.url}}">{{primary_tag.name}}</a>
                 {{/if}}
                 —
                 <time datetime="{{date format="YYYY-MM-DD"}}">{{date}}</time>
             </span>
 
             {{#if custom_excerpt}}
-                <p class="gh-article-excerpt">{{custom_excerpt}}</p>
+                <p>{{custom_excerpt}}</p>
             {{/if}}
 
-            {{> "post-image"}}
+
         </header>
 
-        <div class="gh-content gh-canvas">
+        <div>
             {{content}}
         </div>
 
@@ -34,7 +36,7 @@
 
     {{> "post-navigation"}}
 
-    <div class="gh-comments gh-canvas">
+    <div>
         {{#match @custom.comment_system "ghost"}}
             {{comments}}
         {{else match @custom.comment_system "giscus"}}
@@ -50,5 +52,5 @@
     {{#if @custom.show_related_posts}}
         {{> "related-posts"}}
     {{/if}}
-
+    </div>
 </main>

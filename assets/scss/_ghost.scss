@@ -1,0 +1,11 @@
+.kg-width-wide {
+    grid-column: wide-start/wide-end
+}
+
+.kg-width-full {
+    grid-column: full-start/full-end
+}
+
+.kg-width-full img {
+    width: 100%
+}

@@ -9,90 +9,91 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{{asset "built/screen.css"}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="{{asset "built/styles.css"}}">
+    <script src="{{asset "js/theme/color-modes.js"}}"></script>
 
     {{ghost_head}}
 </head>
 
-<body class="{{body_class}}{{{block "body_class"}}} is-head-{{#match @custom.navigation_layout "Logo on the left"}}left-logo{{else match @custom.navigation_layout "Logo in the middle"}}middle-logo{{else}}stacked{{/match}}{{#match @custom.title_font "=" "Elegant serif"}} has-serif-title{{/match}}{{#match @custom.body_font "=" "Elegant serif"}} has-serif-body{{/match}}">
-<div class="gh-site">
-
-    <header id="gh-head" class="gh-head gh-outer">
-        <div class="gh-head-inner gh-inner">
-            <div class="gh-head-brand">
-                <div class="gh-head-brand-wrapper">
-                    <a class="gh-head-logo" href="{{@site.url}}">
-                        {{#if @site.logo}}
-                            <img src="{{@site.logo}}" alt="{{@site.title}}">
-                        {{else}}
-                            {{@site.title}}
-                        {{/if}}
-                    </a>
-                </div>
-                <button class="gh-search gh-icon-btn" data-ghost-search>{{> "icons/search"}}</button>
-                <button class="gh-burger"></button>
-            </div>
-
-            <nav class="gh-head-menu">
-                {{navigation}}
-                {{#unless @site.members_enabled}}
-                    {{#match @custom.navigation_layout "Stacked"}}
-                        <button class="gh-search gh-icon-btn" data-ghost-search>{{> "icons/search"}}</button>
-                    {{/match}}
-                {{/unless}}
-            </nav>
-
-            <div class="gh-head-actions">
-                {{#unless @site.members_enabled}}
-                    {{^match @custom.navigation_layout "Stacked"}}
-                        <button class="gh-search gh-icon-btn" data-ghost-search>{{> "icons/search"}}</button>
-                    {{/match}}
+<body data-bs-theme="auto">
+    <!-- Responsive navbar-->
+    {{> "icons/theme"}}
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{{@site.url}}">
+                {{#if @site.logo}}
+                    <img src="{{@site.logo}}" alt="{{@site.title}}">
                 {{else}}
-                    <button class="gh-search gh-icon-btn" data-ghost-search>{{> "icons/search"}}</button>
-                    <div class="gh-head-members">
-                        {{#unless @member}}
-                            {{#unless @site.members_invite_only}}
-                                <a class="gh-head-link" href="#/portal/signin" data-portal="signin">{{t "Sign in"}}</a>
-                                <a class="gh-head-btn gh-btn gh-primary-btn" href="#/portal/signup" data-portal="signup">{{t "Subscribe"}}</a>
-                            {{else}}
-                                <a class="gh-head-btn gh-btn gh-primary-btn" href="#/portal/signin" data-portal="signin">{{t "Sign in"}}</a>
-                            {{/unless}}
-                        {{else}}
-                            <a class="gh-head-btn gh-btn gh-primary-btn" href="#/portal/account" data-portal="account">{{t "Account"}}</a>
-                        {{/unless}}
-                    </div>
-                {{/unless}}
+                    {{@site.title}}
+                {{/if}}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                {{navigation}}
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <button class="border-0 bg-transparent"data-ghost-search>{{> "icons/search"}}</button>
+                {{> theme}}
+                </ul>
             </div>
+        </div>
+    </nav>
+
+    <!-- Page header with logo and tagline-->
+    <header class="d-md-flex align-items-md-center pb-3 mb-5 border-bottom">
+        <div class="container">
         </div>
     </header>
-
-    <div class="site-content">
-        {{{body}}}
-    </div>
-
-    <footer class="gh-foot gh-outer">
-        <div class="gh-foot-inner gh-inner">
-            <div class="gh-copyright">
-                {{@site.title}} © {{date format="YYYY"}}
+    <!-- Page content -->
+    <div class="container">
+        <div class="row">
+            <!-- Blog entries-->
+            <div class="col-lg-8">
+                {{{body}}}
             </div>
-            <nav class="gh-foot-menu">
-                {{navigation type="secondary"}}
-            </nav>
-            <div class="gh-powered-by">
-                <a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a>
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Avatar -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                    </div>
+                </div>
+                <!-- Categories widget-->
+                <div class="card mb-4">
+                    <div class="card-header text-center">Categories</div>
+                    <div class="card-body">
+                        <div class="row">
+                            {{tags visibility="all"}}
+                        </div>
+                    </div>
+                </div>
+                <!-- Side widget-->
+                <div class="card mb-4">
+                    <div class="card-header text-center">Side Widget</div>
+                    <div class="card-body">
+
+                    </div>
+                </div>
+                <p class="text-muted text-center">{{@site.title}} © {{date format="YYYY"}}</p>
             </div>
         </div>
+    </div>
+
+    <!-- Footer-->
+    <footer class="py-3">
+        <div class="container"><p class="m-0 text-center">Copyright &copy; {{date format="YYYY"}}</p></div>
     </footer>
+    {{#is "post, page"}}
+        {{> "pswp"}}
+    {{/is}}
 
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" ></script>
 
-{{#is "post, page"}}
-    {{> "pswp"}}
-{{/is}}
+    <script type="module" src="{{asset "built/main.min.js"}}"></script>
 
-<script src="{{asset "built/main.min.js"}}"></script>
-
-{{ghost_foot}}
-
+    {{ghost_foot}}
 </body>
 </html>

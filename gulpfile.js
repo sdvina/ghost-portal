@@ -20,8 +20,10 @@ const easyImport = require('postcss-easy-import');
 
 const filePath = {
     built: 'assets/built/*',
-    scss: 'assets/sass/**/*.sass',
-    css: 'assets/css/**/*.css',
+    scss: 'assets/scss/styles.scss',
+    css: [
+        'assets/css/styles.css',
+        ],
     ts: 'assets/ts/**/*.ts',
     js: [
         'node_modules/@tryghost/shared-theme-assets/assets/js/v1/lib/**/*.js',
@@ -83,8 +85,10 @@ function json(done) {
 function scss(done) {
     pump([
         src(filePath.scss),
-        concat('sass-all.sass'),
-        sass(),
+        sass({
+                includePaths: ['node_modules']
+            },
+            {}),
         dest(destPath.scss),
     ], handleError(done));
 }
@@ -140,14 +144,14 @@ function zipper(done) {
     ], handleError(done));
 }
 
-const sassWatcher = () => watch(filePath.scss, scss);
+const scssWatcher = () => watch(filePath.scss, scss);
 const cssWatcher = () => watch(filePath.css, css);
 const tsWatcher = () => watch(filePath.ts, ts);
 const jsWatcher = () => watch(filePath.js, js);
 const jsonWatcher = () => watch(filePath.json, json);
 const hbsWatcher = () => watch(filePath.hbs, hbs);
 
-const watcher = parallel(sassWatcher, cssWatcher, tsWatcher, jsWatcher, jsonWatcher, hbsWatcher);
+const watcher = parallel(scssWatcher, cssWatcher, tsWatcher, jsWatcher, jsonWatcher, hbsWatcher);
 const build = series(clean, scss, css, ts, js);
 const dev = series(build, serve, watcher);
 

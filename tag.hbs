@@ -1,18 +1,18 @@
 {{!< default}}
 
-<div class="gh-outer">
-<main class="site-main gh-inner">
+<div>
+<main>
 
     {{#tag}}
-    <div class="term">
-        <h1 class="term-name">{{name}}</h1>
+    <div>
+        <h1>{{name}}</h1>
         {{#if description}}
-            <p class="term-description">{{description}}</p>
+            <p>{{description}}</p>
         {{/if}}
     </div>
     {{/tag}}
 
-    <div class="post-feed gh-feed">
+    <div>
         {{#foreach posts}}
             {{> "loop"}}
         {{/foreach}}
